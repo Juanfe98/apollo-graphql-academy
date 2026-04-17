@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-950 text-gray-100;
+    font-family: ui-monospace, Consolas, monospace;
+  }
+}
+
+@layer components {
+  .concept-badge-beginner {
+    @apply bg-green-900 text-green-300 text-xs px-2 py-0.5 rounded-full font-semibold;
+  }
+  .concept-badge-intermediate {
+    @apply bg-yellow-900 text-yellow-300 text-xs px-2 py-0.5 rounded-full font-semibold;
+  }
+  .concept-badge-advanced {
+    @apply bg-red-900 text-red-300 text-xs px-2 py-0.5 rounded-full font-semibold;
+  }
+  .card {
+    @apply bg-gray-900 border border-gray-800 rounded-lg p-4;
+  }
+  .btn {
+    @apply px-3 py-1.5 rounded text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer;
+  }
+  .btn-primary {
+    @apply btn bg-indigo-600 hover:bg-indigo-500 text-white;
+  }
+  .btn-secondary {
+    @apply btn bg-gray-700 hover:bg-gray-600 text-gray-200;
+  }
+  .btn-danger {
+    @apply btn bg-red-800 hover:bg-red-700 text-white;
+  }
+  .btn-success {
+    @apply btn bg-green-800 hover:bg-green-700 text-white;
+  }
+  .input {
+    @apply bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-indigo-500;
+  }
+  .code-block {
+    @apply bg-gray-950 border border-gray-800 rounded p-3 text-xs text-green-300 overflow-auto;
+  }
+}
