@@ -30,6 +30,13 @@ export function ConceptHeader({ number, title, description, level, docsUrl }: Pr
           </div>
           <h1 className="text-xl font-bold text-white">{title}</h1>
           <p className="text-gray-400 text-sm mt-1 max-w-2xl">{description}</p>
+          <div className="flex items-center gap-3 mt-2">
+            <kbd className="text-[10px] text-gray-600 bg-gray-800 border border-gray-700 px-1.5 py-0.5 rounded">←</kbd>
+            <kbd className="text-[10px] text-gray-600 bg-gray-800 border border-gray-700 px-1.5 py-0.5 rounded">→</kbd>
+            <span className="text-[10px] text-gray-600">navigate concepts</span>
+            <kbd className="text-[10px] text-gray-600 bg-gray-800 border border-gray-700 px-1.5 py-0.5 rounded ml-1">esc</kbd>
+            <span className="text-[10px] text-gray-600">home</span>
+          </div>
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
           <button
