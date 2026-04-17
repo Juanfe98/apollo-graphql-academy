@@ -196,6 +196,43 @@ export default function Home() {
         </div>
       )}
 
+      {/* What to Learn Next */}
+      {completedCount > 0 && completedCount < concepts.length && (() => {
+        const nextConcepts = concepts.filter((c) => !completed.has(c.to))
+        // Prioritize: first incomplete beginner, then incomplete intermediate, then advanced
+        const prioritized = [
+          ...nextConcepts.filter((c) => c.level === 'Beginner'),
+          ...nextConcepts.filter((c) => c.level === 'Intermediate'),
+          ...nextConcepts.filter((c) => c.level === 'Advanced'),
+        ].slice(0, 3)
+
+        return (
+          <div className="mt-6 card border-indigo-800 animate-fade-in-up">
+            <div className="flex items-center gap-2 mb-3">
+              <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+              <p className="text-sm font-semibold text-indigo-300">What to learn next</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {prioritized.map((c) => (
+                <Link
+                  key={c.to}
+                  to={c.to}
+                  className={`flex items-center gap-3 p-3 rounded-lg border border-gray-800 hover:border-indigo-700 bg-gray-950 transition-all hover:bg-gray-900`}
+                >
+                  <span className="text-lg font-bold text-gray-700">{c.num}</span>
+                  <div>
+                    <p className="text-xs font-semibold text-white">{c.title}</p>
+                    <span className={`${levelBadge[c.level]} text-[10px] mt-0.5 inline-block`}>{c.level}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )
+      })()}
+
       <div className="mt-8 card border-indigo-900">
         <p className="text-xs font-semibold text-indigo-400 mb-2">Recommended learning path</p>
         <p className="text-xs text-gray-400">
