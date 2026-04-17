@@ -12,8 +12,12 @@ const advancedCount     = concepts.filter((c) => c.level === 'Advanced').length
 export default function Home() {
   const [search, setSearch] = useState('')
   const [activeLevel, setActiveLevel] = useState<string>('All')
-  const { isCompleted, completedCount } = useProgress()
+  const { isCompleted, completedCount, completed, streak } = useProgress()
   const progressPercent = Math.round((completedCount / concepts.length) * 100)
+
+  const beginnerDone = concepts.filter((c) => c.level === 'Beginner' && completed.has(c.to)).length
+  const intermediateDone = concepts.filter((c) => c.level === 'Intermediate' && completed.has(c.to)).length
+  const advancedDone = concepts.filter((c) => c.level === 'Advanced' && completed.has(c.to)).length
 
   const filtered = concepts.filter((c) => {
     const matchesLevel = activeLevel === 'All' || c.level === activeLevel
@@ -38,19 +42,67 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Progress Bar */}
-      <div className="mb-6 card border-gray-800">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs text-gray-400">Your progress</span>
-          <span className="text-xs font-semibold text-white">{completedCount}/{concepts.length} completed</span>
+      {/* Learning Stats Dashboard */}
+      <div className="mb-6 grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="card border-gray-800">
+          <p className="text-xs text-gray-500 mb-1">Overall Progress</p>
+          <div className="flex items-end gap-2">
+            <span className="text-2xl font-bold text-white">{progressPercent}%</span>
+            <span className="text-xs text-gray-500 mb-1">{completedCount}/{concepts.length}</span>
+          </div>
+          <div className="w-full bg-gray-800 rounded-full h-1.5 mt-2 overflow-hidden">
+            <div
+              className="bg-gradient-to-r from-indigo-600 to-indigo-400 h-1.5 rounded-full transition-all duration-500 animate-progress-fill"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
         </div>
-        <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
-          <div
-            className="bg-gradient-to-r from-indigo-600 to-indigo-400 h-2 rounded-full transition-all duration-500 animate-progress-fill"
-            style={{ width: `${progressPercent}%` }}
-          />
+        <div className="card border-gray-800">
+          <p className="text-xs text-gray-500 mb-1">By Level</p>
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] text-green-400">Beginner</span>
+              <span className="text-[10px] text-gray-400">{beginnerDone}/{beginnerCount}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] text-yellow-400">Intermediate</span>
+              <span className="text-[10px] text-gray-400">{intermediateDone}/{intermediateCount}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] text-red-400">Advanced</span>
+              <span className="text-[10px] text-gray-400">{advancedDone}/{advancedCount}</span>
+            </div>
+          </div>
         </div>
-        <p className="text-xs text-gray-600 mt-1.5">{progressPercent}% — mark concepts complete as you learn them</p>
+        <div className="card border-gray-800">
+          <p className="text-xs text-gray-500 mb-1">Learning Streak</p>
+          <div className="flex items-end gap-1">
+            <span className="text-2xl font-bold text-white">{streak.current}</span>
+            <span className="text-xs text-gray-500 mb-1">{streak.current === 1 ? 'day' : 'days'}</span>
+          </div>
+          <p className="text-[10px] text-gray-600 mt-1">
+            {streak.current === 0 ? 'Complete a concept to start!' : streak.current >= 7 ? 'Amazing streak!' : streak.current >= 3 ? 'Keep it going!' : 'Great start!'}
+          </p>
+        </div>
+        <div className="card border-gray-800">
+          <p className="text-xs text-gray-500 mb-1">Achievement</p>
+          <div className="text-2xl mt-0.5">
+            {completedCount === 0 ? '🚀' : completedCount < 8 ? '⭐' : completedCount < 16 ? '🌟' : completedCount < 24 ? '💫' : completedCount < 32 ? '🏆' : '👑'}
+          </div>
+          <p className="text-[10px] text-gray-600 mt-1">
+            {completedCount === 0
+              ? 'Ready to launch'
+              : completedCount < 8
+              ? 'Explorer'
+              : completedCount < 16
+              ? 'Practitioner'
+              : completedCount < 24
+              ? 'Expert'
+              : completedCount < 32
+              ? 'Master'
+              : 'Apollo Legend'}
+          </p>
+        </div>
       </div>
 
       {/* Search & Filter Bar */}
