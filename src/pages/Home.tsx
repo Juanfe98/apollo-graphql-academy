@@ -157,6 +157,86 @@ export default function Home() {
           Pages 25–32 cover Apollo Client 4.x features and architecture concepts — tackle them after the core modules.
         </p>
       </div>
+
+      {/* Quick Tips & Best Practices */}
+      <div className="mt-6">
+        <h2 className="text-lg font-bold text-white mb-3">Quick Tips & Best Practices</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="card border-green-900/50">
+            <div className="flex items-start gap-2">
+              <span className="text-green-400 text-lg leading-none mt-0.5">+</span>
+              <div>
+                <p className="text-sm font-semibold text-green-300">Always normalize your cache</p>
+                <p className="text-xs text-gray-400 mt-1">
+                  Use <code className="text-green-400">keyFields</code> in type policies to ensure entities are stored by unique ID.
+                  This makes cache updates automatic when the same entity is fetched from different queries.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="card border-green-900/50">
+            <div className="flex items-start gap-2">
+              <span className="text-green-400 text-lg leading-none mt-0.5">+</span>
+              <div>
+                <p className="text-sm font-semibold text-green-300">Co-locate fragments with components</p>
+                <p className="text-xs text-gray-400 mt-1">
+                  Each component should define a fragment describing exactly the data it needs.
+                  Parent components compose these fragments into full queries — this prevents over-fetching and keeps data contracts tight.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="card border-yellow-900/50">
+            <div className="flex items-start gap-2">
+              <span className="text-yellow-400 text-lg leading-none mt-0.5">!</span>
+              <div>
+                <p className="text-sm font-semibold text-yellow-300">Avoid network-only as a default</p>
+                <p className="text-xs text-gray-400 mt-1">
+                  The default <code className="text-yellow-400">cache-first</code> policy exists for a reason. Switching everything to
+                  network-only defeats Apollo's biggest advantage. Use <code className="text-yellow-400">cache-and-network</code> when you need fresh data but still want instant UI.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="card border-yellow-900/50">
+            <div className="flex items-start gap-2">
+              <span className="text-yellow-400 text-lg leading-none mt-0.5">!</span>
+              <div>
+                <p className="text-sm font-semibold text-yellow-300">Use optimistic responses for mutations</p>
+                <p className="text-xs text-gray-400 mt-1">
+                  Don't make users wait for server roundtrips. Provide <code className="text-yellow-400">optimisticResponse</code> with
+                  your mutations to update the UI instantly and roll back automatically if the server rejects the change.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="card border-indigo-900/50">
+            <div className="flex items-start gap-2">
+              <span className="text-indigo-400 text-lg leading-none mt-0.5">*</span>
+              <div>
+                <p className="text-sm font-semibold text-indigo-300">Use useSuspenseQuery for new projects</p>
+                <p className="text-xs text-gray-400 mt-1">
+                  Apollo Client 4.x's Suspense hooks (<code className="text-indigo-400">useSuspenseQuery</code>,{' '}
+                  <code className="text-indigo-400">useBackgroundQuery</code>) eliminate loading state boilerplate and integrate
+                  naturally with React's concurrent features and error boundaries.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="card border-indigo-900/50">
+            <div className="flex items-start gap-2">
+              <span className="text-indigo-400 text-lg leading-none mt-0.5">*</span>
+              <div>
+                <p className="text-sm font-semibold text-indigo-300">Set up error link globally</p>
+                <p className="text-xs text-gray-400 mt-1">
+                  Add an <code className="text-indigo-400">ErrorLink</code> at the top of your link chain to log all GraphQL and network
+                  errors centrally. Pair it with <code className="text-indigo-400">errorPolicy: 'all'</code> to surface partial data alongside errors.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
