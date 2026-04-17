@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { concepts } from '../../data/concepts'
+import { useProgress } from '../../hooks/useProgress'
 
 const groups = ['Beginner', 'Intermediate', 'Advanced'] as const
 
@@ -10,6 +11,8 @@ const groupColor: Record<string, string> = {
 }
 
 export function Sidebar() {
+  const { isCompleted } = useProgress()
+
   return (
     <aside className="w-56 flex-shrink-0 border-r border-gray-800 bg-gray-950 overflow-y-auto">
       <div className="p-4">
@@ -31,14 +34,19 @@ export function Sidebar() {
                     <NavLink
                       to={item.to}
                       className={({ isActive }) =>
-                        `block text-xs px-2 py-1.5 rounded transition-colors ${
+                        `flex items-center gap-1.5 text-xs px-2 py-1.5 rounded transition-colors ${
                           isActive
                             ? 'bg-indigo-700 text-white'
                             : 'text-gray-400 hover:text-white hover:bg-gray-800'
                         }`
                       }
                     >
-                      {item.num} · {item.title}
+                      {isCompleted(item.to) && (
+                        <svg className="w-3 h-3 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                      <span>{item.num} · {item.title}</span>
                     </NavLink>
                   </li>
                 ))}

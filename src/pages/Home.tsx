@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { concepts, levelColor, levelBadge } from '../data/concepts'
+import { useProgress } from '../hooks/useProgress'
 
 const levels = ['All', 'Beginner', 'Intermediate', 'Advanced'] as const
 
@@ -11,6 +12,8 @@ const advancedCount     = concepts.filter((c) => c.level === 'Advanced').length
 export default function Home() {
   const [search, setSearch] = useState('')
   const [activeLevel, setActiveLevel] = useState<string>('All')
+  const { isCompleted, completedCount } = useProgress()
+  const progressPercent = Math.round((completedCount / concepts.length) * 100)
 
   const filtered = concepts.filter((c) => {
     const matchesLevel = activeLevel === 'All' || c.level === activeLevel
@@ -33,6 +36,21 @@ export default function Home() {
           </a>
           . Every concept has live demos, interactive controls, and a Cache Inspector so you can see exactly what Apollo is doing internally.
         </p>
+      </div>
+
+      {/* Progress Bar */}
+      <div className="mb-6 card border-gray-800">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs text-gray-400">Your progress</span>
+          <span className="text-xs font-semibold text-white">{completedCount}/{concepts.length} completed</span>
+        </div>
+        <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+          <div
+            className="bg-gradient-to-r from-indigo-600 to-indigo-400 h-2 rounded-full transition-all duration-500"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+        <p className="text-xs text-gray-600 mt-1.5">{progressPercent}% — mark concepts complete as you learn them</p>
       </div>
 
       {/* Search & Filter Bar */}
@@ -108,7 +126,16 @@ export default function Home() {
             >
               <div className="flex items-start justify-between mb-2">
                 <span className="text-gray-600 text-xs">{c.num}</span>
-                <span className={levelBadge[c.level]}>{c.level}</span>
+                <div className="flex items-center gap-1.5">
+                  {isCompleted(c.to) && (
+                    <span className="text-green-400" title="Completed">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
+                  )}
+                  <span className={levelBadge[c.level]}>{c.level}</span>
+                </div>
               </div>
               <p className="text-white font-semibold text-sm">{c.title}</p>
               <p className="text-gray-500 text-xs mt-1">{c.desc}</p>
