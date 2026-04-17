@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <div className="w-full">
-      <div className="mb-8">
+      <div className="mb-8 animate-fade-in-up">
         <h1 className="text-3xl font-bold text-white">Apollo GraphQL Academy</h1>
         <p className="text-gray-400 mt-2">
           A hands-on learning app using the{' '}
@@ -46,7 +46,7 @@ export default function Home() {
         </div>
         <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
           <div
-            className="bg-gradient-to-r from-indigo-600 to-indigo-400 h-2 rounded-full transition-all duration-500"
+            className="bg-gradient-to-r from-indigo-600 to-indigo-400 h-2 rounded-full transition-all duration-500 animate-progress-fill"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -117,18 +117,18 @@ export default function Home() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 stagger-children">
           {filtered.map((c) => (
             <Link
               key={c.to}
               to={c.to}
-              className={`card border transition-colors ${levelColor[c.level]}`}
+              className={`card-interactive border ${levelColor[c.level]}`}
             >
               <div className="flex items-start justify-between mb-2">
                 <span className="text-gray-600 text-xs">{c.num}</span>
                 <div className="flex items-center gap-1.5">
                   {isCompleted(c.to) && (
-                    <span className="text-green-400" title="Completed">
+                    <span className="text-green-400 animate-check-pop" title="Completed">
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                       </svg>

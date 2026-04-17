@@ -21,7 +21,7 @@ export function ConceptHeader({ number, title, description, level, docsUrl }: Pr
   const completed = isCompleted(pathname)
 
   return (
-    <div className="mb-6 border-b border-gray-800 pb-4">
+    <div className="mb-6 border-b border-gray-800 pb-4 animate-fade-in-up">
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="flex items-center gap-3 mb-1">
@@ -49,7 +49,7 @@ export function ConceptHeader({ number, title, description, level, docsUrl }: Pr
             title={completed ? 'Mark as incomplete' : 'Mark as complete'}
           >
             {completed ? (
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3.5 h-3.5 animate-check-pop" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
               </svg>
             ) : (
